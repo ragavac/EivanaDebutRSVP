@@ -34,4 +34,29 @@ form.addEventListener('submit', async (e) => {
   if (!name || !attendance) return;
 
   try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbxfrVpdkQBWF618WZN05mZWmSg3Q1OauKB2Bt-H
+    const response = await fetch("https://script.google.com/macros/s/AKfycbxfrVpdkQBWF618WZN05mZWmSg3Q1OauKB2Bt-HmXQGv48Cjj1GntvoiHgWXSKQhwR6/exec", {
+      method: "POST",
+      body: JSON.stringify({ name, attendance }),
+      headers: { "Content-Type": "application/json" }
+    });
+
+    const result = await response.json();
+
+    if (result.status === "success") {
+      if (attendance === "Yes") {
+        message.textContent = `🎉 Thank you, ${name}! Can't wait to celebrate with you! 💕`;
+      } else {
+        message.textContent = `💖 Thank you, ${name}. We'll miss you on this special night!`;
+      }
+    } else {
+      message.textContent = "⚠️ Oops! Something went wrong. Please try again.";
+    }
+
+    message.style.display = "block";
+    form.reset();
+  } catch (error) {
+    console.error("Error submitting RSVP:", error);
+    message.textContent = "⚠️ Oops! Something went wrong. Please try again.";
+    message.style.display = "block";
+  }
+});
