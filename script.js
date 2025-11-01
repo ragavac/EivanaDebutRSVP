@@ -3,7 +3,7 @@ const message = document.getElementById('responseMessage');
 
 // 🌸 Background slideshow setup
 // Debutant photo appears first
-const backgrounds = ['eivana.jpg', 'pool.jpg', 'hall.jpg'];
+const backgrounds = ['eivana.jpg', 'pool.jpg', 'design.jpg', 'logo.jpg', 'table.jpg', 'view.jpg', 'pool1.jpg', 'pool2.jpg' ];
 let currentBg = 0;
 
 // Show first background
@@ -64,3 +64,4 @@ form.addEventListener('submit', async (e) => {
   message.style.display = "block";
 }
 });
+
