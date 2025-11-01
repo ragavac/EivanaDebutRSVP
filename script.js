@@ -44,7 +44,16 @@ form.addEventListener('submit', async (e) => {
       headers: { "Content-Type": "application/json" }
     });
 
-    const result = await response.json();
+    // 👇 This is new — it will show what Google returns in your browser console
+    const resultText = await response.text();
+    console.log("Google Script Response (raw):", resultText);
+
+    let result;
+    try {
+      result = JSON.parse(resultText);
+    } catch {
+      result = { result: "error", message: "Invalid JSON response" };
+    }
 
     if (result.result === "success") {
       if (attendance === "Yes") {
