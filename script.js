@@ -7,7 +7,7 @@ form.addEventListener('submit', async (e) => {
   if (!name || !attendance) return;
 
   try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbzxawuzFhy4cn2C7kMubBv9-jxthBtGEw4_osAbiPvcE3JudgZ8wmexmc9b3e-oVN89iA/exec", {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbxfrVpdkQBWF618WZN05mZWmSg3Q1OauKB2Bt-HmXQGv48Cjj1GntvoiHgWXSKQhwR6/exec", {
       method: "POST",
       body: JSON.stringify({ name, attendance }),
       headers: { "Content-Type": "application/json" }
@@ -41,3 +41,4 @@ form.addEventListener('submit', async (e) => {
     message.style.display = "block";
   }
 });
+
