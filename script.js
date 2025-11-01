@@ -35,7 +35,7 @@ form.addEventListener('submit', async (e) => {
 
   try {
     // 👇 Replace this with your actual SheetDB API link!
-    const response = await fetch("https://sheetdb.io/api/v1/abcd1234efgh5678", {
+    const response = await fetch("https://sheetdb.io/api/v1/d0dcx8l5j24zc", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -61,3 +61,4 @@ form.addEventListener('submit', async (e) => {
     message.style.display = "block";
   }
 });
+
