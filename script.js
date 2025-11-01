@@ -31,10 +31,14 @@ form.addEventListener('submit', async (e) => {
   const name = document.getElementById('name').value.trim();
   const attendance = document.getElementById('attendance').value;
 
-  if (!name || !attendance) return;
+  if (!name || !attendance) {
+    message.textContent = "⚠️ Please fill in all fields.";
+    message.style.display = "block";
+    return;
+  }
 
   try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbxfrVpdkQBWF618WZN05mZWmSg3Q1OauKB2Bt-HmXQGv48Cjj1GntvoiHgWXSKQhwR6/exec", {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbwHZAYoVclYxWLBUtY9IuIrcEQUlb2EKgJ3iRzEPgMxwR0dZ6_6EFZNnkqxnafsFkgx/exec", {
       method: "POST",
       body: JSON.stringify({ name, attendance }),
       headers: { "Content-Type": "application/json" }
@@ -42,7 +46,7 @@ form.addEventListener('submit', async (e) => {
 
     const result = await response.json();
 
-    if (result.status === "success") {
+    if (result.result === "success") {
       if (attendance === "Yes") {
         message.textContent = `🎉 Thank you, ${name}! Can't wait to celebrate with you! 💕`;
       } else {
