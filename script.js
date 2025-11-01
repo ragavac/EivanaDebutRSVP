@@ -1,10 +1,15 @@
 const form = document.getElementById('rsvpForm');
 const message = document.getElementById('responseMessage');
-const backgrounds = ['pool.jpg', 'hall.jpg', 'eivana.jpg'];
+
+// Set the order of your backgrounds
+// Now the debutant photo appears first 💖
+const backgrounds = ['eivana.jpg', 'pool.jpg', 'hall.jpg'];
 let currentBg = 0;
 
+// Display the first background when page loads
 document.body.style.backgroundImage = `url(${backgrounds[currentBg]})`;
 
+// Background switching controls
 document.getElementById('nextBg').addEventListener('click', () => {
   currentBg = (currentBg + 1) % backgrounds.length;
   changeBackground();
@@ -19,6 +24,7 @@ function changeBackground() {
   document.body.style.backgroundImage = `url(${backgrounds[currentBg]})`;
 }
 
+// RSVP form submission
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const name = document.getElementById('name').value.trim();
