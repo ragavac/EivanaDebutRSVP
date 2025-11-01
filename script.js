@@ -1,15 +1,15 @@
-const form = document.getElementById('rsvpForm'); 
+const form = document.getElementById('rsvpForm');
 const message = document.getElementById('responseMessage');
 
-// Set the order of your backgrounds
-// Debutant photo appears first 💖
+// 🌸 Background slideshow setup
+// Debutant photo appears first
 const backgrounds = ['eivana.jpg', 'pool.jpg', 'hall.jpg'];
 let currentBg = 0;
 
-// Display first background
+// Show first background
 document.body.style.backgroundImage = `url(${backgrounds[currentBg]})`;
 
-// Background switching
+// Buttons for next/prev background
 document.getElementById('nextBg').addEventListener('click', () => {
   currentBg = (currentBg + 1) % backgrounds.length;
   changeBackground();
@@ -24,49 +24,37 @@ function changeBackground() {
   document.body.style.backgroundImage = `url(${backgrounds[currentBg]})`;
 }
 
-// ✨ RSVP submission that saves to Google Sheets
+// ✨ RSVP submission to SheetDB
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const name = document.getElementById('name').value.trim();
   const attendance = document.getElementById('attendance').value;
 
-  if (!name || !attendance) {
-    message.textContent = "⚠️ Please fill in all fields.";
-    message.style.display = "block";
-    return;
-  }
+  if (!name || !attendance) return;
 
   try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbwHZAYoVclYxWLBUtY9IuIrcEQUlb2EKgJ3iRzEPgMxwR0dZ6_6EFZNnkqxnafsFkgx/exec", {
+    // 👇 Replace this with your actual SheetDB API link!
+    const response = await fetch("https://sheetdb.io/api/v1/abcd1234efgh5678", {
       method: "POST",
-      body: JSON.stringify({ name, attendance }),
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        data: [{ name, attendance, timestamp: new Date().toISOString() }]
+      })
     });
 
-    // 👇 This is new — it will show what Google returns in your browser console
-    const resultText = await response.text();
-    console.log("Google Script Response (raw):", resultText);
+    const result = await response.json();
+    console.log("RSVP saved:", result);
 
-    let result;
-    try {
-      result = JSON.parse(resultText);
-    } catch {
-      result = { result: "error", message: "Invalid JSON response" };
-    }
-
-    if (result.result === "success") {
-      if (attendance === "Yes") {
-        message.textContent = `🎉 Thank you, ${name}! Can't wait to celebrate with you! 💕`;
-      } else {
-        message.textContent = `💖 Thank you, ${name}. We'll miss you on this special night!`;
-      }
+    if (attendance === "Yes") {
+      message.textContent = `🎉 Thank you, ${name}! Can't wait to celebrate with you! 💕`;
     } else {
-      message.textContent = "⚠️ Oops! Something went wrong. Please try again.";
+      message.textContent = `💖 Thank you, ${name}. We'll miss you on this special night!`;
     }
 
     message.style.display = "block";
     form.reset();
+
   } catch (error) {
     console.error("Error submitting RSVP:", error);
     message.textContent = "⚠️ Oops! Something went wrong. Please try again.";
